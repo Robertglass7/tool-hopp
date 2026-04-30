@@ -1,0 +1,63 @@
+{
+  "properties": {
+    "bio": {
+      "type": "string",
+      "description": "User bio/description"
+    },
+    "profile_photo": {
+      "type": "string",
+      "description": "Profile photo URL"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Contact phone number"
+    },
+    "location": {
+      "type": "string",
+      "description": "City or area"
+    },
+    "latitude": {
+      "type": "number",
+      "description": "Location latitude"
+    },
+    "longitude": {
+      "type": "number",
+      "description": "Location longitude"
+    },
+    "is_verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "ID verification status"
+    },
+    "owner_rating": {
+      "type": "number",
+      "default": 0,
+      "description": "Average rating as tool owner"
+    },
+    "renter_rating": {
+      "type": "number",
+      "default": 0,
+      "description": "Average rating as renter"
+    },
+    "total_tools_listed": {
+      "type": "integer",
+      "default": 0,
+      "description": "Number of tools listed"
+    },
+    "total_rentals": {
+      "type": "integer",
+      "default": 0,
+      "description": "Number of completed rentals"
+    }
+  },
+  "name": "User",
+  "type": "object",
+  "required": [
+    "bio",
+    "profile_photo",
+    "phone",
+    "location",
+    "latitude",
+    "longitude"
+  ]
+}

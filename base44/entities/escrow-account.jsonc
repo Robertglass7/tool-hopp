@@ -1,0 +1,113 @@
+{
+  "name": "EscrowAccount",
+  "type": "object",
+  "properties": {
+    "booking_id": {
+      "type": "string"
+    },
+    "tool_id": {
+      "type": "string"
+    },
+    "hopper_email": {
+      "type": "string"
+    },
+    "owner_email": {
+      "type": "string"
+    },
+    "renter_email": {
+      "type": "string"
+    },
+    "total_amount": {
+      "type": "number"
+    },
+    "hopper_share": {
+      "type": "number",
+      "description": "50% of total"
+    },
+    "owner_share": {
+      "type": "number",
+      "description": "30% of total"
+    },
+    "platform_share": {
+      "type": "number",
+      "description": "20% of total"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "held",
+        "released",
+        "frozen",
+        "refunded"
+      ],
+      "default": "held"
+    },
+    "insurance_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "active",
+        "completed",
+        "claim_review"
+      ],
+      "default": "pending"
+    },
+    "frozen_reason": {
+      "type": "string"
+    },
+    "released_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "booking_id",
+    "total_amount",
+    "hopper_email",
+    "owner_email"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": {
+          "$ne": "guest"
+        }
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.hopper_email": "{{user.email}}"
+        },
+        {
+          "data.owner_email": "{{user.email}}"
+        },
+        {
+          "data.renter_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.hopper_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

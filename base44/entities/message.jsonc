@@ -1,0 +1,63 @@
+{
+  "name": "Message",
+  "type": "object",
+  "properties": {
+    "sender_email": {
+      "type": "string",
+      "description": "Sender email"
+    },
+    "receiver_email": {
+      "type": "string",
+      "description": "Receiver email"
+    },
+    "tool_id": {
+      "type": "string",
+      "description": "Related tool ID (optional)"
+    },
+    "booking_id": {
+      "type": "string",
+      "description": "Related booking ID (optional)"
+    },
+    "content": {
+      "type": "string",
+      "description": "Message content"
+    },
+    "is_read": {
+      "type": "boolean",
+      "default": false,
+      "description": "Read status"
+    }
+  },
+  "required": [
+    "sender_email",
+    "receiver_email",
+    "content"
+  ],
+  "rls": {
+    "create": {
+      "sender_email": "{{user.email}}",
+      "user_condition": {
+        "role": {
+          "$ne": "guest"
+        }
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "sender_email": "{{user.email}}"
+        },
+        {
+          "receiver_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": false,
+    "delete": false
+  }
+}

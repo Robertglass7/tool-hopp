@@ -1,0 +1,169 @@
+{
+  "name": "Tool",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Tool name/title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "power_tools",
+        "hand_tools",
+        "yard_equipment",
+        "automotive",
+        "ladders_scaffolding",
+        "painting",
+        "heavy_equipment",
+        "plumbing",
+        "electrical",
+        "carpentry",
+        "other"
+      ],
+      "description": "Tool category"
+    },
+    "condition": {
+      "type": "string",
+      "enum": [
+        "excellent",
+        "good",
+        "fair",
+        "needs_repair"
+      ],
+      "default": "good",
+      "description": "Tool condition"
+    },
+    "year": {
+      "type": "string",
+      "description": "Year or age of the tool"
+    },
+    "model_number": {
+      "type": "string",
+      "description": "Model number or SKU"
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tool photos URLs"
+    },
+    "price_per_hour": {
+      "type": "number",
+      "description": "AI-set hourly rental rate"
+    },
+    "price_per_day": {
+      "type": "number",
+      "description": "AI-set daily rental rate"
+    },
+    "price_per_week": {
+      "type": "number",
+      "description": "AI-set weekly rental rate"
+    },
+    "buy_now_price": {
+      "type": "number",
+      "description": "AI-set buy now price (only set if owner opted in for sale)"
+    },
+    "for_sale": {
+      "type": "boolean",
+      "default": false,
+      "description": "Owner has opted to also list this tool for sale"
+    },
+    "insurance_coverage": {
+      "type": "number",
+      "description": "AI-set insurance coverage amount (replacement value)"
+    },
+    "location": {
+      "type": "string",
+      "description": "Tool location"
+    },
+    "latitude": {
+      "type": "number",
+      "description": "Location latitude"
+    },
+    "longitude": {
+      "type": "number",
+      "description": "Location longitude"
+    },
+    "is_available": {
+      "type": "boolean",
+      "default": true,
+      "description": "Current availability status"
+    },
+    "deposit_required": {
+      "type": "number",
+      "default": 0,
+      "description": "Security deposit amount (AI-set based on industry benchmarks)"
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Tool owner email"
+    },
+    "rating": {
+      "type": "number",
+      "default": 0,
+      "description": "Average rating"
+    },
+    "total_bookings": {
+      "type": "integer",
+      "default": 0,
+      "description": "Number of completed bookings"
+    }
+  },
+  "required": [
+    "title",
+    "category",
+    "owner_email"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": {
+          "$ne": "guest"
+        }
+      }
+    },
+    "read": true,
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "write": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

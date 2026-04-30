@@ -1,0 +1,93 @@
+{
+  "name": "RenterSubscription",
+  "type": "object",
+  "properties": {
+    "renter_email": {
+      "type": "string",
+      "description": "Renter's email"
+    },
+    "plan": {
+      "type": "string",
+      "enum": [
+        "basic",
+        "pro"
+      ],
+      "default": "basic",
+      "description": "Subscription tier"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "cancelled",
+        "expired"
+      ],
+      "default": "active"
+    },
+    "monthly_price": {
+      "type": "number",
+      "description": "Monthly subscription cost"
+    },
+    "deposit_waived": {
+      "type": "boolean",
+      "default": true,
+      "description": "Security deposits waived for subscribers"
+    },
+    "started_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "next_billing_date": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "renter_email",
+    "plan",
+    "monthly_price"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.renter_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.renter_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.renter_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

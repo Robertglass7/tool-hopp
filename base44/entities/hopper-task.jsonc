@@ -1,0 +1,115 @@
+{
+  "name": "HopperTask",
+  "type": "object",
+  "properties": {
+    "booking_id": {
+      "type": "string"
+    },
+    "tool_id": {
+      "type": "string"
+    },
+    "tool_title": {
+      "type": "string"
+    },
+    "hopper_email": {
+      "type": "string"
+    },
+    "renter_email": {
+      "type": "string"
+    },
+    "owner_email": {
+      "type": "string"
+    },
+    "task_type": {
+      "type": "string",
+      "enum": [
+        "delivery",
+        "pickup"
+      ],
+      "description": "Type of task"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "in_progress",
+        "completed",
+        "cancelled"
+      ],
+      "default": "pending"
+    },
+    "delivery_address": {
+      "type": "string"
+    },
+    "scheduled_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "inspection_photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "4 inspection photos"
+    },
+    "inspection_checklist": {
+      "type": "object",
+      "description": "5-point safety checklist"
+    },
+    "inspection_complete": {
+      "type": "boolean",
+      "default": false
+    },
+    "damage_reported": {
+      "type": "boolean",
+      "default": false
+    },
+    "damage_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "booking_id",
+    "tool_id",
+    "hopper_email",
+    "task_type"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": {
+          "$ne": "guest"
+        }
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.hopper_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.hopper_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

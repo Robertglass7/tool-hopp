@@ -1,0 +1,70 @@
+{
+  "name": "HopperTransaction",
+  "type": "object",
+  "properties": {
+    "booking_id": {
+      "type": "string"
+    },
+    "tool_id": {
+      "type": "string"
+    },
+    "hopper_email": {
+      "type": "string"
+    },
+    "owner_email": {
+      "type": "string"
+    },
+    "renter_email": {
+      "type": "string"
+    },
+    "rental_amount": {
+      "type": "number",
+      "description": "Total rental price"
+    },
+    "owner_share": {
+      "type": "number",
+      "description": "Owner's 35%"
+    },
+    "hopper_share": {
+      "type": "number",
+      "description": "Hopper's 40%"
+    },
+    "platform_share": {
+      "type": "number",
+      "description": "ToolHopp's 15%"
+    },
+    "insurance_reserve": {
+      "type": "number",
+      "description": "Insurance 10%"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "completed",
+        "disputed"
+      ],
+      "default": "pending"
+    },
+    "delivered_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "retrieved_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "booking_id",
+    "tool_id",
+    "hopper_email",
+    "owner_email",
+    "rental_amount"
+  ],
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    }
+  }
+}

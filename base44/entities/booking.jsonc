@@ -1,0 +1,121 @@
+{
+  "name": "Booking",
+  "type": "object",
+  "properties": {
+    "tool_id": {
+      "type": "string",
+      "description": "Tool ID"
+    },
+    "tool_title": {
+      "type": "string",
+      "description": "Tool title (cached)"
+    },
+    "renter_email": {
+      "type": "string",
+      "description": "Renter email"
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Owner email"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Rental start time"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Rental end time"
+    },
+    "rental_type": {
+      "type": "string",
+      "enum": [
+        "hourly",
+        "daily",
+        "weekly"
+      ],
+      "description": "Rental duration type"
+    },
+    "total_price": {
+      "type": "number",
+      "description": "Total rental cost"
+    },
+    "deposit_amount": {
+      "type": "number",
+      "default": 0,
+      "description": "Security deposit"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "declined",
+        "active",
+        "pending_return",
+        "completed",
+        "cancelled"
+      ],
+      "default": "pending",
+      "description": "Booking status"
+    },
+    "pickup_notes": {
+      "type": "string",
+      "description": "Pickup instructions"
+    },
+    "return_notes": {
+      "type": "string",
+      "description": "Return survey data (JSON)"
+    }
+  },
+  "required": [
+    "tool_id",
+    "renter_email",
+    "owner_email",
+    "start_date",
+    "end_date",
+    "rental_type",
+    "total_price"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": {
+          "$ne": "guest"
+        }
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.renter_email": "{{user.email}}"
+        },
+        {
+          "data.owner_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.owner_email": "{{user.email}}"
+        },
+        {
+          "data.renter_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": false
+  }
+}

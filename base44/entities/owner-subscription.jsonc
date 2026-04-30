@@ -1,0 +1,75 @@
+{
+  "name": "OwnerSubscription",
+  "type": "object",
+  "properties": {
+    "owner_email": {
+      "type": "string",
+      "description": "Tool owner's email"
+    },
+    "plan": {
+      "type": "string",
+      "enum": [
+        "starter",
+        "pro",
+        "business"
+      ],
+      "default": "starter",
+      "description": "Subscription tier"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "cancelled",
+        "expired",
+        "past_due"
+      ],
+      "default": "active"
+    },
+    "monthly_price": {
+      "type": "number",
+      "description": "Monthly subscription cost"
+    },
+    "max_tools": {
+      "type": "integer",
+      "description": "Max tools covered by plan"
+    },
+    "tools_enrolled": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tool IDs enrolled in Hopper service"
+    },
+    "assigned_hopper_email": {
+      "type": "string",
+      "description": "Assigned Hopper's email"
+    },
+    "started_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "next_billing_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "includes_delivery": {
+      "type": "boolean",
+      "default": true
+    },
+    "includes_pickup": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "owner_email",
+    "plan",
+    "monthly_price"
+  ],
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    }
+  }
+}

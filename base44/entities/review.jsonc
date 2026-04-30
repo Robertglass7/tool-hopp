@@ -1,0 +1,94 @@
+{
+  "name": "Review",
+  "type": "object",
+  "properties": {
+    "booking_id": {
+      "type": "string",
+      "description": "Related booking ID"
+    },
+    "tool_id": {
+      "type": "string",
+      "description": "Related tool ID"
+    },
+    "reviewer_email": {
+      "type": "string",
+      "description": "Reviewer email"
+    },
+    "reviewee_email": {
+      "type": "string",
+      "description": "User being reviewed"
+    },
+    "review_type": {
+      "type": "string",
+      "enum": [
+        "tool",
+        "renter",
+        "owner"
+      ],
+      "description": "Type of review"
+    },
+    "rating": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Star rating (1-5)"
+    },
+    "comment": {
+      "type": "string",
+      "description": "Review comment"
+    }
+  },
+  "required": [
+    "booking_id",
+    "reviewer_email",
+    "reviewee_email",
+    "review_type",
+    "rating"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": {
+          "$ne": "guest"
+        }
+      }
+    },
+    "read": true,
+    "update": {
+      "$or": [
+        {
+          "data.reviewer_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.reviewer_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "write": {
+      "$or": [
+        {
+          "data.reviewer_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

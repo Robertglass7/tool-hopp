@@ -1,0 +1,117 @@
+{
+  "name": "Hopper",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Hopper's email"
+    },
+    "full_name": {
+      "type": "string",
+      "description": "Full legal name"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number"
+    },
+    "location": {
+      "type": "string",
+      "description": "Service area/address"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "verified",
+        "approved",
+        "suspended",
+        "rejected"
+      ],
+      "default": "pending",
+      "description": "Verification status"
+    },
+    "id_document_url": {
+      "type": "string",
+      "description": "Government ID photo URL"
+    },
+    "selfie_url": {
+      "type": "string",
+      "description": "Selfie for ID verification"
+    },
+    "proof_of_address_url": {
+      "type": "string",
+      "description": "Utility bill or similar"
+    },
+    "background_check_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "passed",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "storage_capacity": {
+      "type": "string",
+      "enum": [
+        "small",
+        "medium",
+        "large",
+        "warehouse"
+      ],
+      "default": "medium",
+      "description": "How much space they have"
+    },
+    "max_tools": {
+      "type": "integer",
+      "default": 10,
+      "description": "Maximum tools they can store"
+    },
+    "current_tools_stored": {
+      "type": "integer",
+      "default": 0
+    },
+    "rating": {
+      "type": "number",
+      "default": 0
+    },
+    "total_rentals_handled": {
+      "type": "integer",
+      "default": 0
+    },
+    "total_earnings": {
+      "type": "number",
+      "default": 0
+    },
+    "bank_account_last4": {
+      "type": "string",
+      "description": "Last 4 digits of bank account"
+    },
+    "payout_method": {
+      "type": "string",
+      "enum": [
+        "bank_transfer",
+        "paypal",
+        "venmo"
+      ],
+      "default": "bank_transfer"
+    }
+  },
+  "required": [
+    "user_email",
+    "full_name",
+    "phone",
+    "location"
+  ],
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    }
+  }
+}
