@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { base44 } from "@/api/base44Client";
+import { toolhopp as base44 } from \"@/api/toolhoppClient\";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Camera, X, CheckSquare, Square, Loader2, CheckCircle2 } from "lucide-react";
